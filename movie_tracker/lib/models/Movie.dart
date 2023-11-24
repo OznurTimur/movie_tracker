@@ -1,4 +1,4 @@
-import 'package:movie_tracker/models/Media.dart';
+import 'Media.dart';
 
 class Movie extends Media{
   Movie({
