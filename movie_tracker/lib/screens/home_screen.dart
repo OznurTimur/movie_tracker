@@ -4,6 +4,7 @@ import 'package:movie_tracker/models/Movie.dart';
 import '../api/api.dart';
 import '../widgets/trending_slider.dart';
 import 'package:movie_tracker/screens/user_profile_screen.dart';
+import 'package:movie_tracker/shared/colors.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -27,9 +28,9 @@ late Future<List<Movie>> trendingMovies;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 113, 189, 113),
+      backgroundColor: Colours.light_g,
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 5, 67, 27),
+        backgroundColor: Colours.dark_g,
         elevation: 0,
         title: Image.asset(
           'assets./blutv2417.jpg',
@@ -39,6 +40,38 @@ late Future<List<Movie>> trendingMovies;
         ),
         centerTitle: true,
       ),
+
+      drawer: Drawer(
+        child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+        const DrawerHeader(
+        decoration: BoxDecoration(
+          color: Color.fromARGB(255, 5, 67, 27),
+        ),
+        child: Text('Menu'),
+      ),
+      ListTile(
+         leading: Icon(Icons.person), // Icon for the profile
+        title: Text('User Profile'),
+        onTap: () {
+          Navigator.pop(context); // Close the drawer
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => UserProfileScreen()),
+          );
+        },
+      ),
+      ListTile(
+         leading: Icon(Icons.settings),
+        title: const Text('Settings'),
+        onTap: () {
+          
+        },
+      ),
+    ],
+  ),
+),
 
 
       body: SingleChildScrollView(
