@@ -5,6 +5,7 @@ import '../api/api.dart';
 import '../widgets/trending_slider.dart';
 import 'package:movie_tracker/screens/user_profile_screen.dart';
 import 'package:movie_tracker/shared/colors.dart';
+import 'package:movie_tracker/screens/search_screen.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -33,7 +34,7 @@ late Future<List<Movie>> trendingMovies;
         backgroundColor: Colours.dark_g,
         elevation: 0,
         title: Image.asset(
-          'assets./blutv2417.jpg',
+          'assets/blutv2417.jpg',
           fit:BoxFit.cover,
           height: 60,
           filterQuality: FilterQuality.high,
@@ -69,6 +70,17 @@ late Future<List<Movie>> trendingMovies;
           
         },
       ),
+      ListTile(
+            leading: Icon(Icons.search),
+            title: Text('Search'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SearchScreen()),
+              );
+            },
+          ),
     ],
   ),
 ),
