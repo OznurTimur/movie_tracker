@@ -1,11 +1,10 @@
+import 'package:movie_tracker/widgets/side_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_tracker/models/Movie.dart';
+import 'package:movie_tracker/models/TVShow.dart';
 import '../api/api.dart';
 import '../widgets/trending_slider.dart';
-import 'package:movie_tracker/screens/user_profile_screen.dart';
-import 'package:movie_tracker/shared/colors.dart';
-import 'package:movie_tracker/screens/search_screen.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -17,75 +16,36 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+
 late Future<List<Movie>> trendingMovies;
+late Future<List<TVShow>> trendingTVShows;
 
   @override
   void initState(){
     super.initState();
     trendingMovies=Api().getTrendingMovies();
+    trendingTVShows=Api().getTrendingTVShows();
   }
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colours.light_g,
+      //backgroundColor: const Color.fromARGB(255, 113, 189, 113),
       appBar: AppBar(
-        backgroundColor: Colours.dark_g,
+        //backgroundColor: const Color.fromARGB(255, 5, 67, 27),
         elevation: 0,
         title: Image.asset(
-          'assets/blutv2417.jpg',
+          'assets./blutv2417.jpg',
           fit:BoxFit.cover,
           height: 60,
           filterQuality: FilterQuality.high,
         ),
-        centerTitle: true,
+        centerTitle:true,
       ),
 
-      drawer: Drawer(
-        child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-        const DrawerHeader(
-        decoration: BoxDecoration(
-          color: Color.fromARGB(255, 5, 67, 27),
-        ),
-        child: Text('Menu'),
-      ),
-      ListTile(
-         leading: Icon(Icons.person), // Icon for the profile
-        title: Text('User Profile'),
-        onTap: () {
-          Navigator.pop(context); // Close the drawer
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => UserProfileScreen()),
-          );
-        },
-      ),
-      ListTile(
-         leading: Icon(Icons.settings),
-        title: const Text('Settings'),
-        onTap: () {
-          
-        },
-      ),
-      ListTile(
-            leading: Icon(Icons.search),
-            title: Text('Search'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SearchScreen()),
-              );
-            },
-          ),
-    ],
-  ),
-),
-
-
+      drawer:Sidebar(),
+  
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
@@ -109,7 +69,27 @@ late Future<List<Movie>> trendingMovies;
                 } else{
                   return const Center(child:CircularProgressIndicator());
                 }
-              }),
+              }
+              ),
+            ),
+            Text ('Trending TV Shows',
+          style: GoogleFonts.aBeeZee(fontSize:25)),
+          const SizedBox(height:16),
+           SizedBox(
+            child: FutureBuilder(
+              future: trendingTVShows,
+              builder: (context,snapshot){
+                if(snapshot.hasError){
+                  return Center(
+                    child: Text(snapshot.error.toString()),
+                    );
+                } else if (snapshot.hasData) {
+                  return TrendingSlider(snapshot:snapshot);
+                } else{
+                  return const Center(child:CircularProgressIndicator());
+                }
+              }
+              ),
             )
           ]
         )
