@@ -1,12 +1,11 @@
-// User name
-// Switch between dark light theme
-// Switch between country / language
-// User can select / unselect services the user is subscribed (i.e. Netflix, etc.)
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:movie_tracker/api/api.dart';
+import 'package:movie_tracker/widgets/back_button.dart';
 import 'package:movie_tracker/theme_notifier.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class UserProfileScreen extends StatefulWidget {
   @override
@@ -18,7 +17,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   Api api = Api();
   bool isDarkTheme = true;
 
-  String selectedCountryLanguage = 'English';
+  List<Map<String, String>> availableLanguages = [];
+  String selectedLanguage = 'en'; // Default language code
+
+
   List<String> subscribedServices =
       []; // Initialize an empty list for subscribed services
   List<String> availableServices = [
@@ -41,6 +43,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   @override
   void initState() {
     super.initState();
+    api.fetchAvailableLanguages().then((languages) {
+      setState(() {
+        availableLanguages = languages;
+      });
+    });
     fetchAccountDetails();
   }
 
@@ -59,19 +66,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   void changeLanguage(String language) {
     setState(() {
-      selectedCountryLanguage = language;
+      selectedLanguage = language;
     });
   }
 
-  @override
+ @override
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
-    return MaterialApp(
-      theme: isDarkTheme ? ThemeData.dark() : ThemeData.light(),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('User Profile'),
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('User Profile'),
+        leading: BackBtn(),
+      ),
         body: Center(
           child: accountData == null
               ? CircularProgressIndicator()
@@ -102,27 +108,27 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     },
                     activeColor: Colors.greenAccent,
                     inactiveTrackColor:
-                        const Color.fromARGB(255, 113, 110, 110),
+                        Color.fromARGB(255, 59, 58, 58),
                   ),
                   SizedBox(height: 20),
                   DropdownButton<String>(
-                    value: selectedCountryLanguage,
-                    onChanged: (String? newValue) {
-                      if (newValue != null) {
-                        changeLanguage(newValue);
-                      }
-                    },
-                    items: <String>[
-                      'English',
-                      'French',
-                      'Spanish',
-                    ].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
+              value: selectedLanguage,
+              onChanged: (String? newValue) {
+                if (newValue != null) {
+                  setState(() {
+                    selectedLanguage = newValue;
+                  });
+                  updateLanguagePreference(newValue);
+                }
+              },
+              items: availableLanguages.map((language) {
+                return DropdownMenuItem<String>(
+                  value: language['iso_639_1']!,
+                  child: Text(language['name']!),
+                );
+              }).toList(),
+            ),
+         
                   SizedBox(height: 20),
                   Text(
                     'Subscribed Services:',
@@ -148,7 +154,37 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   ),
                 ]),
         ),
-      ),
-    );
+      );
   }
+
+
+Future<void> updateLanguagePreference(String languageCode) async {
+  String sessionId = api.createGuestSession().toString(); 
+  String accountId = Api.accountId ; 
+
+  final Map<String, dynamic> requestBody = {
+    'language': languageCode,
+  };
+
+  final String apiUrl = 'https://api.themoviedb.org/3/account/$accountId/settings?api_key=6049c47350887cca020dd26ddd5f1ad2&session_id=$sessionId';
+
+  try {
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: jsonEncode(requestBody),
+    );
+
+    if (response.statusCode == 200) {
+      print('Language preference updated successfully');
+    } else {
+      throw Exception('Failed to update language preference');
+    }
+  } catch (e) {
+    print('Error updating language preference: $e');
+    throw Exception('Failed to update language preference');
+  }
+}
 }
