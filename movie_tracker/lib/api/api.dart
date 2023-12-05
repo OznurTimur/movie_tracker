@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:movie_tracker/models/Movie.dart';
 import 'package:movie_tracker/models/Media.dart';
@@ -21,14 +22,13 @@ class Api {
       "https://api.themoviedb.org/3/search/person?api_key=$apiKey";
   static const rateMovieUrl =
       "https://api.themoviedb.org/3/movie?api_key=$apiKey";
-  static const addToWatchlistUrl =
-      "https://api.themoviedb.org/3/account/20705651/watchlist?api_key=$apiKey";
+
   static const baseUrl = "https://api.themoviedb.org/3/";
   static const creditsEndpoint = "movie";
   static const filmographyEndpoint = "person";
   static const userId = "20705651";
-  static const sessionId="";
-  static const token ="a9b326c5ed5716135dbc4e7ca3dde90d593b932d";
+
+ 
 
   String getCreditsUrl(int movieId) {
     return "$baseUrl$creditsEndpoint/$movieId/credits?api_key=$apiKey";
@@ -37,6 +37,106 @@ class Api {
   String getFilmographyUrl(int actorId) {
     return "$baseUrl$filmographyEndpoint/$actorId/combined_credits?api_key=$apiKey&language=en-US";
   }
+
+  Future<Map<String, dynamic>?> fetchUserRatedTVShows() async {
+    final String url = 'https://api.themoviedb.org/3/account/$accountId/rated/tv?language=en-US&page=1&sort_by=created_at.asc';
+
+    final Map<String, String> headers = {
+      'Authorization':
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MDQ5YzQ3MzUwODg3Y2NhMDIwZGQyNmRkZDVmMWFkMiIsInN1YiI6IjY1NTNhYWNkNTM4NjZlMDBmZjA1ZjNmMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hy8Nz4pWPueNlz0-C0qYYB_aDFO12hMfqQuDMVljTh4', // Replace with your Bearer token
+      'accept': 'application/json',
+    };
+
+    final response = await http.get(Uri.parse(url), headers: headers);
+
+    if (response.statusCode == 200) {
+      // If the request is successful, parse the JSON response
+      Map<String, dynamic> data = json.decode(response.body);
+      return data;
+    } else {
+      // If the request fails, print the error and return null
+      print('Request failed with status: ${response.statusCode}');
+      return null;
+    }
+  }
+
+  
+  Future<Map<String, dynamic>?> fetchUserRatedMovies() async {
+    final String url = 'https://api.themoviedb.org/3/account/$accountId/rated/movie?language=en-US&page=1&sort_by=created_at.asc';
+
+    final Map<String, String> headers = {
+      'Authorization':
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MDQ5YzQ3MzUwODg3Y2NhMDIwZGQyNmRkZDVmMWFkMiIsInN1YiI6IjY1NTNhYWNkNTM4NjZlMDBmZjA1ZjNmMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hy8Nz4pWPueNlz0-C0qYYB_aDFO12hMfqQuDMVljTh4', // Replace with your Bearer token
+      'accept': 'application/json',
+    };
+
+    final response = await http.get(Uri.parse(url), headers: headers);
+
+    if (response.statusCode == 200) {
+      // If the request is successful, parse the JSON response
+      Map<String, dynamic> data = json.decode(response.body);
+      return data;
+    } else {
+      // If the request fails, print the error and return null
+      print('Request failed with status: ${response.statusCode}');
+      return null;
+    }
+  }
+
+Future<Map<String, dynamic>?> fetchWatchlistedMovies() async {
+    final String accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MDQ5YzQ3MzUwODg3Y2NhMDIwZGQyNmRkZDVmMWFkMiIsInN1YiI6IjY1NTNhYWNkNTM4NjZlMDBmZjA1ZjNmMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hy8Nz4pWPueNlz0-C0qYYB_aDFO12hMfqQuDMVljTh4'; 
+
+    final String url =
+        'https://api.themoviedb.org/3/account/20705651/watchlist/movies?language=en-US&page=1&sort_by=created_at.asc';
+
+    try {
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+          'Accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        throw Exception('Failed to load watchlisted movies');
+      }
+    } catch (e) {
+      throw Exception('Failed to fetch watchlisted movies: $e');
+    }
+  }
+
+  Future<Map<String, dynamic>?> fetchWatchlistedTVShows() async {
+    final String accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MDQ5YzQ3MzUwODg3Y2NhMDIwZGQyNmRkZDVmMWFkMiIsInN1YiI6IjY1NTNhYWNkNTM4NjZlMDBmZjA1ZjNmMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hy8Nz4pWPueNlz0-C0qYYB_aDFO12hMfqQuDMVljTh4'; 
+
+    final String url =
+        'https://api.themoviedb.org/3/account/20705651/watchlist/tv?language=en-US&page=1&sort_by=created_at.asc';
+
+    try {
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+          'Accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        throw Exception('Failed to load watchlisted tv shows');
+      }
+    } catch (e) {
+      throw Exception('Failed to fetch watchlisted tv shows: $e');
+    }
+  }
+
+
+
+
+
 
   Future<Map<int, String>> fetchGenresMap() async {
 
@@ -149,29 +249,10 @@ class Api {
   }
 
 
-
-  Future<void> rateMovie(int movieId, double rating) async {
-    Map<String, dynamic> requestBody = {
-      'value': rating,
-    };
-    final response = await http.post(
-      Uri.parse(rateMovieUrl),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(requestBody),
-    );
-    if (response.statusCode == 200) {
-      print('Movie rated successfully');
-    } else {
-      throw Exception('Failed to rate the movie');
-    }
-  }
-
   Future<Actor> fetchActorDetails(int actorId) async {
     // Construct the URL to fetch actor details
     String actorDetailsUrl =
-        'https://api.themoviedb.org/3/person/$actorId?api_key=$apiKey&language=en-US';
+        'https://api.themoviedb.org/3/person/$actorId?api_key=$apiKey';
 
     try {
       final response = await http.get(Uri.parse(actorDetailsUrl));
@@ -187,69 +268,64 @@ class Api {
     }
   }
 
-  Future<Media> fetchMediaDetails(int mediaId, String mediaType) async {
+ Future<Media> fetchMediaDetails(int mediaId, String mediaType) async {
+  String mediaDetailsUrl = 'https://api.themoviedb.org/3/$mediaType/$mediaId?api_key=$apiKey';
 
-   String mediaDetailsUrl = 'https://api.themoviedb.org/3/$mediaType/$mediaId?api_key=$apiKey';
-
-   try {
-      final response = await http.get(Uri.parse(mediaDetailsUrl));
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        return Media.fromJson(data);
-      } else {
-        throw Exception('Failed to load media details');
-      }
-    } catch (e) {
-      print('Error fetching actor details: $e');
-      throw Exception('Failed to load media details');
-    } 
-
-  }
+  try {
+    final response = await http.get(Uri.parse(mediaDetailsUrl));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return Media.fromJson(data);
+    } else {
+      throw Exception('Failed to load media details. Status code: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error fetching media details: $e');
+    throw Exception('Failed to load media details. Error: $e');
+  } 
+}
 
 
-Future<String> createSession() async {
-  final response = await http.post(
-    Uri.https('api.themoviedb.org', '/3/authentication/session/new', {
-      'api_key': apiKey,
-    }),
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-    },
-    body: '{"request_token":"$token"}',
-  );
+  Future<String> createGuestSession() async {
+  final String url = 'https://api.themoviedb.org/3/authentication/guest_session/new?api_key=$apiKey';
+
+  final response = await http.get(Uri.parse(url));
 
   if (response.statusCode == 200) {
-    final sessionId = response.body;
-    print('Session ID: $sessionId');
-    return sessionId;
+    final result = json.decode(response.body);
+    final String guestSessionId = result['guest_session_id'];
+    print('Guest Session ID: $guestSessionId');
+    return guestSessionId;
   } else {
-    throw Exception('Failed to create session');
+    throw Exception('Failed to create guest session');
   }
 }
 
-Future<void> addToWatchlist(int id, String mediatype, String sessionId) async {
-  final url = Uri.https(
-    'api.themoviedb.org',
-    '/3/account/$accountId/watchlist',
-    {
-      'api_key': apiKey,
-      'session_id': sessionId,
-    },
-  );
 
-  final response = await http.post(
-    url,
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-    },
-    body: '{"media_type":$mediatype,"media_id":$id,"watchlist":true}',
-  );
+Future<List<Map<String, String>>> fetchAvailableLanguages() async {
+  final response = await http.get(Uri.parse('https://api.themoviedb.org/3/configuration/languages?api_key=6049c47350887cca020dd26ddd5f1ad2'));
 
-  if (response.statusCode == 201) {
-    print('Movie added to watchlist successfully!');
+  if (response.statusCode == 200) {
+    List<dynamic> languages = json.decode(response.body);
+    List<String> targetLanguages = ['en', 'es', 'fr']; // English, Spanish, French
+    List<Map<String, String>> selectedLanguages = [];
+
+    languages.forEach((language) {
+      if (targetLanguages.contains(language['iso_639_1'])) {
+        selectedLanguages.add({
+          'name': language['english_name'],
+          'iso_639_1': language['iso_639_1'],
+        });
+      }
+    });
+
+    return selectedLanguages;
   } else {
-    print('Failed to add movie to watchlist: ${response.body}');
+    throw Exception('Failed to load languages');
   }
 }
+
+
+
 
 }
