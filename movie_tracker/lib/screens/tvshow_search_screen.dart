@@ -7,7 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_tracker/models/TVShow.dart';
 import 'package:movie_tracker/api/api.dart';
-import 'package:movie_tracker/screens/movie_details_screen.dart';
+import 'package:movie_tracker/screens/media_details_screen.dart';
 
 
 class TVSearchScreen extends StatefulWidget {
@@ -18,7 +18,7 @@ class TVSearchScreen extends StatefulWidget {
 class _TVSearchScreenState extends State<TVSearchScreen> {
   final TextEditingController _searchController = TextEditingController();
   Api api = Api();
-  List<dynamic> searched = [];
+  List<TVShow> searched = [];
   List<String> recentSearches = [];
 
   @override
@@ -35,8 +35,10 @@ class _TVSearchScreenState extends State<TVSearchScreen> {
               controller: _searchController,
               onChanged: (value) async {
                 String query = value;
+                print('Search text changed: $value');
                 if (query.isNotEmpty) {
                   List<TVShow> results = await api.getTVSearch(query);
+                   print('API Results: $results');
                   setState(() {
                     searched = results;
                   });
