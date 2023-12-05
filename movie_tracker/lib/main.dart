@@ -1,9 +1,14 @@
-import 'package:movie_tracker/shared/colors.dart';
+import 'package:movie_tracker/theme_notifier.dart';
 import 'package:movie_tracker/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (_) => ThemeNotifier(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -11,14 +16,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      final themeNotifier = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'BluTV',
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: Colours.scaffoldBgColor,
-        useMaterial3: true,
-      ),
-      home: const HomeScreen(),
+      theme: themeNotifier.isDarkMode ? ThemeData.dark() : ThemeData.light(),
+      home: HomeScreen(),
     );
   }
 }
