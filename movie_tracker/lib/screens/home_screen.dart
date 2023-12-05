@@ -36,7 +36,7 @@ late Future<List<TVShow>> trendingTVShows;
         //backgroundColor: const Color.fromARGB(255, 5, 67, 27),
         elevation: 0,
         title: Image.asset(
-          'assets./blutv2417.jpg',
+          'lib/assets/blutv2417.jpg',
           fit:BoxFit.cover,
           height: 60,
           filterQuality: FilterQuality.high,
