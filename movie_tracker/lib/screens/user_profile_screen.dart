@@ -5,6 +5,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:movie_tracker/api/api.dart';
+import 'package:movie_tracker/theme_notifier.dart';
+import 'package:provider/provider.dart';
 
 class UserProfileScreen extends StatefulWidget {
   @override
@@ -14,7 +16,8 @@ class UserProfileScreen extends StatefulWidget {
 class _UserProfileScreenState extends State<UserProfileScreen> {
   Map<String, dynamic>? accountData;
   Api api = Api();
-  bool isDarkTheme = false;
+  bool isDarkTheme = true;
+
   String selectedCountryLanguage = 'English';
   List<String> subscribedServices =
       []; // Initialize an empty list for subscribed services
@@ -58,19 +61,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     setState(() {
       selectedCountryLanguage = language;
     });
-    // Implement logic to change the language/locale as needed
-    // You might use packages like intl or flutter_localizations for this purpose
   }
 
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
       theme: isDarkTheme ? ThemeData.dark() : ThemeData.light(),
       home: Scaffold(
         appBar: AppBar(
           title: Text('User Profile'),
-          ),
-          body: Center(
+        ),
+        body: Center(
           child: accountData == null
               ? CircularProgressIndicator()
               : Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -79,12 +81,25 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 20),
+                  if (accountData != null) ...[
+                    if (accountData!['avatar'] != null &&
+                        accountData!['avatar']['tmdb'] != null &&
+                        accountData!['avatar']['tmdb']['avatar_path'] != null)
+                      Image.network(
+                        'https://image.tmdb.org/t/p/w200${accountData!['avatar']['tmdb']['avatar_path']}',
+                        width: 100,
+                        height: 100,
+                      ),
+                  ],
+                  SizedBox(height: 20),
                   Text('Username: ${accountData!['username']}'),
                   Text('ID: ${accountData!['id']}'),
                   SizedBox(height: 20),
                   Switch(
-                    value: isDarkTheme,
-                    onChanged: toggleTheme,
+                    value: themeNotifier.isDarkMode,
+                    onChanged: (value) {
+                      themeNotifier.toggleTheme();
+                    },
                     activeColor: Colors.greenAccent,
                     inactiveTrackColor:
                         const Color.fromARGB(255, 113, 110, 110),
@@ -111,7 +126,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   SizedBox(height: 20),
                   Text(
                     'Subscribed Services:',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 10),
                   Wrap(
@@ -127,14 +142,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         },
                         selectedColor: Colors.green,
                         backgroundColor: Colors.grey[300],
-                        checkmarkColor: Colors.white,
+                        checkmarkColor: Colors.black,
                       );
                     }).toList(),
                   ),
                 ]),
         ),
       ),
-      
     );
   }
 }
