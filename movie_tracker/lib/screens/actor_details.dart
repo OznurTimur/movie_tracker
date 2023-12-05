@@ -7,7 +7,7 @@ import 'package:movie_tracker/shared/constants.dart';
 import 'package:movie_tracker/api/api.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
-import 'package:movie_tracker/screens/movie_details_screen.dart';
+import 'package:movie_tracker/screens/media_details_screen.dart';
 
 class ActorDetailsScreen extends StatefulWidget {
   final Actor actor;
@@ -85,6 +85,8 @@ class _ActorDetailsScreenState extends State<ActorDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     int age = calculateAge(actor.birthday);
+    Color textColor = Theme.of(context).textTheme.bodyText1!.color!;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(actor.name),
@@ -116,17 +118,17 @@ class _ActorDetailsScreenState extends State<ActorDetailsScreen> {
               text: TextSpan(
                 style: TextStyle(
                   fontSize: 16,
-                  color: Colors.black,
+                  color: textColor,
                 ),
                 children: [
                   TextSpan(
-                    text: 'Birthday: ',
+                    text: 'Age: ',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   TextSpan(
-                    text: '${actor.birthday} (Age: $age)',
+                    text: '$age',
                     style: TextStyle(
                       fontWeight: FontWeight.normal,
                     ),
