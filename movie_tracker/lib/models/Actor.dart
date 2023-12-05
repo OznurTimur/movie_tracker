@@ -3,6 +3,7 @@ class Actor {
   final String name;
   final String profilePath;
   final String birthday;
+  final String biography;
 
 
   Actor({
@@ -10,17 +11,18 @@ class Actor {
     required this.name,
     required this.profilePath,
     required this.birthday,
+    required this.biography,
   });
 
   factory Actor.fromJson(Map<String, dynamic> json) {
-    return Actor(
+  return Actor(
     id: json['id'],
     name: json['name'] ?? "",
     profilePath: json['profile_path'] ?? '',
-    birthday:json['birthday'] ?? '',
-   
+    birthday: json['birthday'] ?? '',
+    biography: json['biography'] ?? '',
   );
-  }
+}
 }
 
 
