@@ -9,7 +9,7 @@ class Media {
   int id;
   List<dynamic> genre;
   String mediaType;
-  int? runTime;
+  int runTime;
 
   
 
