@@ -7,7 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_tracker/models/Movie.dart'; 
 import 'package:movie_tracker/api/api.dart'; 
-import 'package:movie_tracker/screens/movie_details_screen.dart';
+import 'package:movie_tracker/screens/media_details_screen.dart';
 import 'package:movie_tracker/screens/actor_details.dart';
 
 class SearchScreen extends StatefulWidget {
