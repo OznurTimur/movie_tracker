@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_tracker/screens/user_profile_screen.dart';
 import 'package:movie_tracker/screens/movie_search_screen.dart';
-import 'package:movie_tracker/screens/tvshow_search_screen.dart';
 import 'package:movie_tracker/screens/actor_search_screen.dart';
 import 'package:movie_tracker/screens/watchlist_screen.dart';
 import 'package:movie_tracker/screens/ratings.dart';
@@ -39,17 +38,6 @@ class Sidebar extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => SearchScreen()),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.search),
-            title: const Text('Search TV Show'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SearchScreenTV()),
               );
             },
           ),

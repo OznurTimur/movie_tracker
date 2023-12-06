@@ -15,6 +15,7 @@ class ActorDetailsScreen extends StatefulWidget {
   ActorDetailsScreen({super.key, required this.actor});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ActorDetailsScreenState createState() => _ActorDetailsScreenState();
 }
 
@@ -121,7 +122,7 @@ class _ActorDetailsScreenState extends State<ActorDetailsScreen> {
                   color: textColor,
                 ),
                 children: [
-                  TextSpan(
+                  const TextSpan(
                     text: 'Age: ',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -129,7 +130,7 @@ class _ActorDetailsScreenState extends State<ActorDetailsScreen> {
                   ),
                   TextSpan(
                     text: '$age',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.normal,
                     ),
                   ),
@@ -151,7 +152,7 @@ class _ActorDetailsScreenState extends State<ActorDetailsScreen> {
                   ),
                 )),
 
-            Container(
+            SizedBox(
               height: 300,
               child: ListView.builder(
                 itemCount: movies_and_shows.length,
@@ -161,9 +162,8 @@ class _ActorDetailsScreenState extends State<ActorDetailsScreen> {
                       title: Text(media.title),
                       leading: Image.network(
                         '${Constants.imagePath}${media.posterPath}',
-                        height: 160,
+                        height: 80,
                         width: 80,
-                        fit: BoxFit.cover,
                       ),
                       onTap: () {
                         //Navigate to details screen

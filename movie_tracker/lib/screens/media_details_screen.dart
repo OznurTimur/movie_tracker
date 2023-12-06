@@ -14,6 +14,7 @@ import 'package:http/http.dart' as http;
 // ignore: must_be_immutable
 class DetailsScreen extends StatefulWidget {
   final Media media;
+  
   // ignore: prefer_const_constructors_in_immutables
   DetailsScreen({
     super.key,
@@ -21,6 +22,7 @@ class DetailsScreen extends StatefulWidget {
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _DetailsScreenState createState() => _DetailsScreenState();
 }
 
@@ -29,13 +31,24 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Api api = Api(); // Instance of Api class
   late Media media;
   List<Actor> actors = [];
-  Map<int, String> genresMap = {};
+  
+
+  String getYearFromDate(String releaseDate) {
+    // Split the date string by "-" to get the parts
+    List<String> dateParts = releaseDate.split('-');
+
+    // Extract the year (first part of the split)
+    String year = dateParts.isNotEmpty ? dateParts[0] : 'Unknown';
+
+    return year;
+  }
 
   @override
   void initState() {
     super.initState();
     media = widget.media;
     fetchMovieCredits();
+    fetchMediaDetails();
   }
 
   @override
@@ -44,7 +57,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar.large(
-            leading: BackBtn(),
+            leading: const BackBtn(),
             backgroundColor: Colours.scaffoldBgColor,
             expandedHeight: 500,
             pinned: true,
@@ -66,7 +79,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.all(12),
+              padding: const EdgeInsets.all(12),
               child: Column(
                 children: [
                   Text('Overview',
@@ -138,122 +151,66 @@ class _DetailsScreenState extends State<DetailsScreen> {
             ),
           ),
 
-          // SliverToBoxAdapter(
-          //   child: Container(
-          //       padding: const EdgeInsets.all(8),
-          //       decoration: BoxDecoration(
-          //         border: Border.all(color: Colors.grey),
-          //         borderRadius: BorderRadius.circular(10),
-          //       ),
-          //       child: Row(
-          //         children: [
-          //           Text(
-          //             'Genre: ',
-          //             style: GoogleFonts.roboto(
-          //                 fontSize: 17, fontWeight: FontWeight.bold),
-          //           ),
-          //           //genre text here
-          //         ],
-          //       )),
-          // ),
-          // SliverToBoxAdapter(
-          //   child: Container(
-          //       padding: const EdgeInsets.all(8),
-          //       decoration: BoxDecoration(
-          //         border: Border.all(color: Colors.grey),
-          //         borderRadius: BorderRadius.circular(10),
-          //       ),
-          //       child: Row(
-          //         children: [
-          //           Text(
-          //             'Director: ',
-          //             style: GoogleFonts.roboto(
-          //                 fontSize: 17, fontWeight: FontWeight.bold),
-          //           ),
-          //           //director text here
-          //         ],
-          //       )),
-          // ),
-          // SliverToBoxAdapter(
-          //   child: FutureBuilder<Media>(
-          //     future: api.fetchMediaDetails(media.id,
-          //         media.mediaType), // Replace with your media ID and type
-          //     builder: (context, snapshot) {
-          //       if (snapshot.connectionState == ConnectionState.waiting) {
-          //         return CircularProgressIndicator(); // or a loading indicator
-          //       } else if (snapshot.hasError) {
-          //         return Text('Error loading media details: ${snapshot.error}');
-          //       } else if (!snapshot.hasData) {
-          //         return Text('No data available.');
-          //       } else {
-          //         Media media123 = snapshot.data!;
+      
 
-          //         return Row(
-          //           children: [
-          //             Text(
-          //               'Duration:  ',
-          //               style: GoogleFonts.roboto(
-          //                 fontSize: 17,
-          //                 fontWeight: FontWeight.bold,
-          //               ),
-          //             ),
-          //             SizedBox(
-          //               width: 5,
-          //             ),
-          //             Text(
-          //               '${media123.runTime} minutes', // Access runTime from fetched media
-          //               style: GoogleFonts.roboto(
-          //                 fontSize: 17,
-          //                 fontWeight: FontWeight.normal,
-          //               ),
-          //             ),
-          //           ],
-          //         );
-          //       }
-          //     },
-          //   ),
-          // ),
-          // SliverToBoxAdapter(
-          //   child: Container(
-          //       padding: const EdgeInsets.all(8),
-          //       decoration: BoxDecoration(
-          //         border: Border.all(color: Colors.grey),
-          //         borderRadius: BorderRadius.circular(10),
-          //       ),
-          //       child: Row(
-          //         children: [
-          //           Text(
-          //             'Year of release: ',
-          //             style: GoogleFonts.roboto(
-          //                 fontSize: 17, fontWeight: FontWeight.bold),
-          //           ),
-          //         ],
-          //       )),
-          // ),
-          // SliverToBoxAdapter(
-          //   child: Container(
-          //       padding: const EdgeInsets.all(8),
-          //       decoration: BoxDecoration(
-          //         border: Border.all(color: Colors.grey),
-          //         borderRadius: BorderRadius.circular(10),
-          //       ),
-          //       child: Row(
-          //         children: [
-          //           Text(
-          //             'PEGI info: ',
-          //             style: GoogleFonts.roboto(
-          //                 fontSize: 17, fontWeight: FontWeight.bold),
-          //           ),
-          //           //pegi text here
-          //         ],
-          //       )),
-          // ),
+          SliverToBoxAdapter(
+            child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+            child: Row(
+            children: [
+              Text(
+                'Duration:  ',
+                style: GoogleFonts.roboto(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                '${media.runTime} minutes', // Access runTime from fetched media
+                style: GoogleFonts.roboto(
+                  fontSize: 17,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ],
+          )
+          )
+          ),
+          
 
-
+          SliverToBoxAdapter(
+            child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      'Year of release: ',
+                      style: GoogleFonts.roboto(
+                          fontSize: 17, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      getYearFromDate(
+                          media.releaseDate), // Pass the release date string
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ],
+                )),
+          ),
 
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -264,7 +221,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   // Display actors' names
                   // Display actors' names and images
                   SingleChildScrollView(
@@ -272,7 +229,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     child: Row(
                       children: actors.map((actor) {
                         return Padding(
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           child: Column(
                             children: [
                               InkWell(
@@ -292,7 +249,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   radius: 40,
                                 ),
                               ),
-                              SizedBox(height: 8),
+                              const SizedBox(height: 8),
                               Text(
                                 actor.name,
                                 style: GoogleFonts.roboto(
@@ -342,5 +299,17 @@ class _DetailsScreenState extends State<DetailsScreen> {
     }
   }
 
- 
+  Future<void> fetchMediaDetails() async {
+    try {
+      // Fetch movie details using the movieId
+      Media details = await api.fetchMediaDetails(media.id, media.mediaType);
+      setState(() {
+        media = details;
+      });
+    } catch (e) {
+      // Handle any errors that might occur during fetching details
+      print('Error fetching movie details: $e');
+      // Show an error message to the user or handle accordingly
+    }
+  }
 }

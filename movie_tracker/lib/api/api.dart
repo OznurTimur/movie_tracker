@@ -36,25 +36,7 @@ class Api {
     return "$baseUrl$filmographyEndpoint/$actorId/combined_credits?api_key=$apiKey&language=en-US";
   }
 
-  Future<Map<String, dynamic>?> fetchWatchProviders(int movieId) async {
-    final String baseUrl = 'https://api.themoviedb.org/3/movie/$movieId';
-    final String watchProvidersEndpoint = '/watch/providers';
- 
 
-    final Uri uri = Uri.parse('$baseUrl$watchProvidersEndpoint?api_key=$apiKey');
-
-    try {
-      final http.Response response = await http.get(uri);
-      if (response.statusCode == 200) {
-        return json.decode(response.body);
-      } else {
-        throw Exception('Failed to fetch watch providers for the movie');
-      }
-    } catch (e) {
-      print('Error: $e');
-      return null;
-    }
-  }
 
 
   Future<Map<String, dynamic>?> fetchUserRatedTVShows() async {
@@ -152,39 +134,6 @@ Future<Map<String, dynamic>?> fetchWatchlistedMovies() async {
     }
   }
 
-
-
-
-
-
-  Future<Map<int, String>> fetchGenresMap() async {
-
-  final String url = 'https://api.themoviedb.org/3/genre/movie/list?api_key=$apiKey';
-
-  try {
-    final response = await http.get(Uri.parse(url));
-
-    if (response.statusCode == 200) {
-      Map<String, dynamic> genreData = json.decode(response.body);
-      Map<int, String> genresMap = {};
-
-      // Extract genre information and populate the genresMap
-      List<dynamic> genres = genreData['genres'] ?? [];
-      for (final genre in genres) {
-        genresMap[genre['id']] = genre['name'];
-      }
-
-      return genresMap;
-    } else {
-      // Handle API call error, throw an exception, or return a default value
-      throw Exception('Failed to fetch genre data');
-    }
-  } catch (e) {
-    // Handle other errors that might occur during the process
-    throw Exception('Error: $e');
-  }
-}
-
   Future<Map<String, dynamic>?> fetchAccountDetails() async {
     final url = Uri.parse('$baseUrl/account/$userId');
     final token =
@@ -241,18 +190,6 @@ Future<Map<String, dynamic>?> fetchWatchlistedMovies() async {
     }
   }
 
-   Future<List<TVShow>> getTVSearch(String query) async {
-    String searchUrl = '$searchTVShow&query=$query';
-
-    final response = await http.get(Uri.parse(searchUrl));
-
-    if (response.statusCode == 200) {
-      final decodedData = json.decode(response.body)['results'] as List;
-      return decodedData.map((item) => TVShow.fromJson(item)).toList();
-    } else {
-      throw Exception('Failed to load TV shows');
-    }
-  }
 
    Future<List<Actor>> getActorSearch(String query) async {
     String searchUrl = '$searchActor&query=$query';

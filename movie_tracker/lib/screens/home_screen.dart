@@ -44,7 +44,7 @@ late Future<List<TVShow>> trendingTVShows;
         centerTitle:true,
       ),
 
-      drawer:Sidebar(),
+      drawer:const Sidebar(),
   
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

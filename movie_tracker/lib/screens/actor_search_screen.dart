@@ -1,16 +1,13 @@
-// Should have a search box
-// user can search for movies/tv shows / actors
-// app shows at least 10 latest searches
-// when user submits a search at least 10 items appear.
-// The user can navigate to a page of the result
-
 import 'package:flutter/material.dart';
 import 'package:movie_tracker/models/Actor.dart';
 import 'package:movie_tracker/api/api.dart';
 import 'package:movie_tracker/screens/actor_details.dart';
 
 class ActorSearchScreen extends StatefulWidget {
+  const ActorSearchScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _ActorSearchScreenState createState() => _ActorSearchScreenState();
 }
 
@@ -24,7 +21,7 @@ class _ActorSearchScreenState extends State<ActorSearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search'),
+        title: const Text('Search'),
       ),
       body: Column(
         children: [
@@ -64,7 +61,7 @@ class _ActorSearchScreenState extends State<ActorSearchScreen> {
                 hintText: 'Search for actors',
                 suffixIcon: recentSearches.isEmpty
                     ? IconButton(
-                        icon: Icon(Icons.clear),
+                        icon: const Icon(Icons.clear),
                         onPressed: () {
                           _searchController.clear();
                           setState(() {
@@ -73,7 +70,7 @@ class _ActorSearchScreenState extends State<ActorSearchScreen> {
                         },
                       )
                     : DropdownButton<String>(
-                        icon: Icon(Icons.keyboard_arrow_down),
+                        icon: const Icon(Icons.keyboard_arrow_down),
                         items: recentSearches.map((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
@@ -94,7 +91,7 @@ class _ActorSearchScreenState extends State<ActorSearchScreen> {
           ),
           Expanded(
             child: searched.isEmpty
-                ? Center(
+                ? const Center(
                     child: Text('Nothing found..'),
                   )
                 : ListView.builder(
