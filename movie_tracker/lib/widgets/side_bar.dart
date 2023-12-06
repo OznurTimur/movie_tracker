@@ -7,31 +7,33 @@ import 'package:movie_tracker/screens/watchlist_screen.dart';
 import 'package:movie_tracker/screens/ratings.dart';
 
 class Sidebar extends StatelessWidget {
+  const Sidebar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          DrawerHeader(
+          const DrawerHeader(
             decoration: BoxDecoration(
             ),
             child: Text('Menu'),
           ),
           ListTile(
-            leading: Icon(Icons.person),
-            title: Text('User Profile'),
+            leading: const Icon(Icons.person),
+            title: const Text('User Profile'),
             onTap: () {
               Navigator.pop(context); // Close the drawer
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => UserProfileScreen()),
+                MaterialPageRoute(builder: (context) => const UserProfileScreen()),
               );
             },
           ),
           ListTile(
-            leading: Icon(Icons.search),
-            title: Text('Search Movie'),
+            leading: const Icon(Icons.search),
+            title: const Text('Search Movie'),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
@@ -41,19 +43,19 @@ class Sidebar extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.search),
-            title: Text('Search TV Show'),
+            leading: const Icon(Icons.search),
+            title: const Text('Search TV Show'),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => TVSearchScreen()),
+                MaterialPageRoute(builder: (context) => const SearchScreenTV()),
               );
             },
           ),
           ListTile(
-            leading: Icon(Icons.search),
-            title: Text('Search Actor/Actress'),
+            leading: const Icon(Icons.search),
+            title: const Text('Search Actor/Actress'),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
@@ -63,8 +65,8 @@ class Sidebar extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.list_alt_sharp),
-            title: Text('Watchlists'),
+            leading: const Icon(Icons.list_alt_sharp),
+            title: const Text('Watchlists'),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
@@ -74,8 +76,8 @@ class Sidebar extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.score_sharp),
-            title: Text('Ratings'),
+            leading: const Icon(Icons.score_sharp),
+            title: const Text('Ratings'),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(

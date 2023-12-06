@@ -38,7 +38,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
     fetchMovieCredits();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,7 +137,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ),
             ),
           ),
-      
+
           // SliverToBoxAdapter(
           //   child: Container(
           //       padding: const EdgeInsets.all(8),
@@ -249,6 +248,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
           //         ],
           //       )),
           // ),
+
+
+
           SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
@@ -339,4 +341,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
       // Handle error case, show a message to the user, etc.
     }
   }
+
+ 
 }

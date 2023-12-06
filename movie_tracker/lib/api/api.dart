@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'package:url_launcher/url_launcher.dart';
-
 import 'package:movie_tracker/models/Movie.dart';
 import 'package:movie_tracker/models/Media.dart';
 import 'package:movie_tracker/models/Actor.dart';
@@ -38,12 +36,33 @@ class Api {
     return "$baseUrl$filmographyEndpoint/$actorId/combined_credits?api_key=$apiKey&language=en-US";
   }
 
+  Future<Map<String, dynamic>?> fetchWatchProviders(int movieId) async {
+    final String baseUrl = 'https://api.themoviedb.org/3/movie/$movieId';
+    final String watchProvidersEndpoint = '/watch/providers';
+ 
+
+    final Uri uri = Uri.parse('$baseUrl$watchProvidersEndpoint?api_key=$apiKey');
+
+    try {
+      final http.Response response = await http.get(uri);
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        throw Exception('Failed to fetch watch providers for the movie');
+      }
+    } catch (e) {
+      print('Error: $e');
+      return null;
+    }
+  }
+
+
   Future<Map<String, dynamic>?> fetchUserRatedTVShows() async {
     final String url = 'https://api.themoviedb.org/3/account/$accountId/rated/tv?language=en-US&page=1&sort_by=created_at.asc';
 
     final Map<String, String> headers = {
       'Authorization':
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MDQ5YzQ3MzUwODg3Y2NhMDIwZGQyNmRkZDVmMWFkMiIsInN1YiI6IjY1NTNhYWNkNTM4NjZlMDBmZjA1ZjNmMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hy8Nz4pWPueNlz0-C0qYYB_aDFO12hMfqQuDMVljTh4', // Replace with your Bearer token
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MDQ5YzQ3MzUwODg3Y2NhMDIwZGQyNmRkZDVmMWFkMiIsInN1YiI6IjY1NTNhYWNkNTM4NjZlMDBmZjA1ZjNmMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hy8Nz4pWPueNlz0-C0qYYB_aDFO12hMfqQuDMVljTh4', 
       'accept': 'application/json',
     };
 
@@ -62,11 +81,11 @@ class Api {
 
   
   Future<Map<String, dynamic>?> fetchUserRatedMovies() async {
-    final String url = 'https://api.themoviedb.org/3/account/$accountId/rated/movie?language=en-US&page=1&sort_by=created_at.asc';
+    final String url = 'https://api.themoviedb.org/3/account/$accountId/rated/movies?language=en-US&page=1&sort_by=created_at.asc';
 
     final Map<String, String> headers = {
       'Authorization':
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MDQ5YzQ3MzUwODg3Y2NhMDIwZGQyNmRkZDVmMWFkMiIsInN1YiI6IjY1NTNhYWNkNTM4NjZlMDBmZjA1ZjNmMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hy8Nz4pWPueNlz0-C0qYYB_aDFO12hMfqQuDMVljTh4', // Replace with your Bearer token
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MDQ5YzQ3MzUwODg3Y2NhMDIwZGQyNmRkZDVmMWFkMiIsInN1YiI6IjY1NTNhYWNkNTM4NjZlMDBmZjA1ZjNmMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hy8Nz4pWPueNlz0-C0qYYB_aDFO12hMfqQuDMVljTh4', 
       'accept': 'application/json',
     };
 

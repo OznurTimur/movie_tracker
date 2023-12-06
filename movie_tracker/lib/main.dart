@@ -6,14 +6,19 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(ChangeNotifierProvider(
       create: (_) => ThemeNotifier(),
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
       final themeNotifier = Provider.of<ThemeNotifier>(context);
@@ -21,7 +26,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'BluTV',
       theme: themeNotifier.isDarkMode ? ThemeData.dark() : ThemeData.light(),
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }

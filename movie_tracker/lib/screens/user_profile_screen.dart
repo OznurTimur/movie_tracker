@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -8,6 +10,8 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
 class UserProfileScreen extends StatefulWidget {
+  const UserProfileScreen({super.key});
+
   @override
   _UserProfileScreenState createState() => _UserProfileScreenState();
 }
@@ -75,18 +79,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Profile'),
-        leading: BackBtn(),
+        title: const Text('User Profile'),
+        leading: const BackBtn(),
       ),
         body: Center(
           child: accountData == null
-              ? CircularProgressIndicator()
+              ? const CircularProgressIndicator()
               : Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Text(
+                  const Text(
                     'Account Details:',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   if (accountData != null) ...[
                     if (accountData!['avatar'] != null &&
                         accountData!['avatar']['tmdb'] != null &&
@@ -97,10 +101,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         height: 100,
                       ),
                   ],
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text('Username: ${accountData!['username']}'),
                   Text('ID: ${accountData!['id']}'),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Switch(
                     value: themeNotifier.isDarkMode,
                     onChanged: (value) {
@@ -110,7 +114,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     inactiveTrackColor:
                         Color.fromARGB(255, 59, 58, 58),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   DropdownButton<String>(
               value: selectedLanguage,
               onChanged: (String? newValue) {
@@ -129,12 +133,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               }).toList(),
             ),
          
-                  SizedBox(height: 20),
-                  Text(
+                  const SizedBox(height: 20),
+                  const Text(
                     'Subscribed Services:',
                     style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Wrap(
                     alignment: WrapAlignment.center,
                     spacing: 8.0,
