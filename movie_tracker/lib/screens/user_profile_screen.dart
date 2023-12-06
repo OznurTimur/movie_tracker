@@ -112,7 +112,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     },
                     activeColor: Colors.greenAccent,
                     inactiveTrackColor:
-                        Color.fromARGB(255, 59, 58, 58),
+                        const Color.fromARGB(255, 59, 58, 58),
                   ),
                   const SizedBox(height: 20),
                   DropdownButton<String>(

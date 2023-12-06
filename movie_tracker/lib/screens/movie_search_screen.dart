@@ -8,10 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:movie_tracker/models/Movie_model.dart'; 
 import 'package:movie_tracker/api/api.dart'; 
 import 'package:movie_tracker/screens/media_details_screen.dart';
-import 'package:movie_tracker/screens/actor_details.dart';
 
 class SearchScreen extends StatefulWidget {
+  const SearchScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _SearchScreenState createState() => _SearchScreenState();
 }
 

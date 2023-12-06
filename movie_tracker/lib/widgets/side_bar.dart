@@ -37,7 +37,7 @@ class Sidebar extends StatelessWidget {
               Navigator.pop(context);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SearchScreen()),
+                MaterialPageRoute(builder: (context) => const SearchScreen()),
               );
             },
           ),

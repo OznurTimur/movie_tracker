@@ -12,7 +12,6 @@ class Movie extends Media {
     required int id,
     required List<dynamic> genre,
     required String mediaType,
-    required int runTime,
   }) : super(
           title: title,
           backDropPath: backDropPath,
@@ -24,12 +23,9 @@ class Movie extends Media {
           id: id,
           genre: genre,
           mediaType: mediaType,
-          runTime:runTime,
-         
         );
 
   factory Movie.fromJson(Map<String, dynamic> json) {
-
     return Movie(
       title: json["title"] ?? "",
       backDropPath: json["backdrop_path"] ?? '',
@@ -41,7 +37,6 @@ class Movie extends Media {
       genre: ['genre_ids'],
       id: json["id"] ?? 0,
       mediaType: json["media_type"] ?? '',
-      runTime:json["runtime"] ?? 0
     );
   }
 }

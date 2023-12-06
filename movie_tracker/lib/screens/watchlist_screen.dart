@@ -7,12 +7,15 @@ import 'package:movie_tracker/screens/media_details_screen.dart';
 
 class Watchlists extends StatefulWidget {
   @override
+  // ignore: library_private_types_in_public_api
   _WatchlistsState createState() => _WatchlistsState();
 }
 
 class _WatchlistsState extends State<Watchlists> {
   final Api api = Api();
+  // ignore: non_constant_identifier_names
   List<Map<String, dynamic>> TVlist = [];
+  // ignore: non_constant_identifier_names
   List<Map<String, dynamic>> MovieList = [];
 
   @override
@@ -67,7 +70,7 @@ class _WatchlistsState extends State<Watchlists> {
 
   Widget _buildWatchlistMovie(List<Map<String, dynamic>> userWatchlist) {
     return userWatchlist.isEmpty
-        ? Center(child: CircularProgressIndicator())
+        ? const Center(child: CircularProgressIndicator())
         : ListView.builder(
             itemCount: userWatchlist.length,
             itemBuilder: (context, index) {
@@ -80,7 +83,7 @@ class _WatchlistsState extends State<Watchlists> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => DetailsScreen(
-                        media: Media.fromJson(userWatchlist[index]),
+                        media: Movie.fromJson(userWatchlist[index]),
                       ),
                     ),
                   );
@@ -100,7 +103,7 @@ class _WatchlistsState extends State<Watchlists> {
 
   Widget _buildWatchlistTV(List<Map<String, dynamic>> userWatchlist) {
     return userWatchlist.isEmpty
-        ? Center(child: CircularProgressIndicator())
+        ? const Center(child: CircularProgressIndicator())
         : ListView.builder(
             itemCount: userWatchlist.length,
             itemBuilder: (context, index) {
@@ -108,16 +111,7 @@ class _WatchlistsState extends State<Watchlists> {
               String name = userWatchlist[index]['name'];
 
               return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailsScreen(
-                        media: Media.fromJson(userWatchlist[index]),
-                      ),
-                    ),
-                  );
-                },
+                
                 child: ListTile(
                   leading: Image.network(
                     'https://image.tmdb.org/t/p/w200/$posterPath',

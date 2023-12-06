@@ -13,7 +13,7 @@ class TVShow extends Media {
     required int id,
     required List<dynamic> genre,
     required String mediaType,
-    required int runTime
+   
   }) : super(
           title: title,
           backDropPath: backDropPath,
@@ -25,7 +25,7 @@ class TVShow extends Media {
           id: id,
           genre: genre,
           mediaType: mediaType,
-          runTime:runTime,
+          
          
         );
 
@@ -41,7 +41,7 @@ class TVShow extends Media {
       genre: json["genre_ids"],
       id: json["id"],
       mediaType: json["media_type"],
-      runTime: json["episode_run_time"] ?? 0
+      
     );
   }
 }

@@ -78,16 +78,7 @@ class _RatingsState extends State<Ratings> {
               String name = ratedList[index]['name'];
 
               return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DetailsScreen(
-                      media: TVShow.fromJson(ratedList[index]),
-                    ),
-                  ),
-                );
-              },
+             
               child: ListTile(
                 leading: Image.network(
                   'https://image.tmdb.org/t/p/w200/$posterPath',

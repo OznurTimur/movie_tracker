@@ -151,40 +151,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
             ),
           ),
 
-      
-
-          SliverToBoxAdapter(
-            child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-            child: Row(
-            children: [
-              Text(
-                'Duration:  ',
-                style: GoogleFonts.roboto(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Text(
-                '${media.runTime} minutes', // Access runTime from fetched media
-                style: GoogleFonts.roboto(
-                  fontSize: 17,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-            ],
-          )
-          )
-          ),
-          
-
           SliverToBoxAdapter(
             child: Container(
                 padding: const EdgeInsets.all(8),

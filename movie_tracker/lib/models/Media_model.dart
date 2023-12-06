@@ -9,9 +9,6 @@ class Media {
   int id;
   List<dynamic> genre;
   String mediaType;
-  int runTime;
-
-  
 
   Media({
     required this.title,
@@ -24,8 +21,6 @@ class Media {
     required this.genre,
     required this.id,
     required this.mediaType,
-    required this.runTime,
-    
   });
 
   factory Media.fromJson(Map<String, dynamic> json) {
@@ -40,9 +35,6 @@ class Media {
       genre: json["genre_ids"],
       id: json["id"],
       mediaType: json["media_type"],
-      runTime: json["runtime"] ?? 0
-      
-      
     );
   }
 }
