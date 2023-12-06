@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'package:movie_tracker/models/Movie.dart';
-import 'package:movie_tracker/models/Media.dart';
-import 'package:movie_tracker/models/Actor.dart';
-import 'package:movie_tracker/models/TVShow.dart';
+import 'package:movie_tracker/models/Movie_model.dart';
+import 'package:movie_tracker/models/Media_model.dart';
+import 'package:movie_tracker/models/Actor_model.dart';
+import 'package:movie_tracker/models/TVShow_model.dart';
 import 'package:http/http.dart' as http;
 
 class Api {
@@ -16,7 +16,7 @@ class Api {
       "https://api.themoviedb.org/3/search/movie?api_key=$apiKey";
   static const searchTVShow =
       "https://api.themoviedb.org/3/search/tv?api_key=$apiKey";
-  static const searchActor = 
+  static const searchActor =
       "https://api.themoviedb.org/3/search/person?api_key=$apiKey";
   static const rateMovieUrl =
       "https://api.themoviedb.org/3/movie?api_key=$apiKey";
@@ -26,8 +26,6 @@ class Api {
   static const filmographyEndpoint = "person";
   static const userId = "20705651";
 
- 
-
   String getCreditsUrl(int movieId) {
     return "$baseUrl$creditsEndpoint/$movieId/credits?api_key=$apiKey";
   }
@@ -36,15 +34,13 @@ class Api {
     return "$baseUrl$filmographyEndpoint/$actorId/combined_credits?api_key=$apiKey&language=en-US";
   }
 
-
-
-
   Future<Map<String, dynamic>?> fetchUserRatedTVShows() async {
-    final String url = 'https://api.themoviedb.org/3/account/$accountId/rated/tv?language=en-US&page=1&sort_by=created_at.asc';
+    final String url =
+        'https://api.themoviedb.org/3/account/$accountId/rated/tv?language=en-US&page=1&sort_by=created_at.asc';
 
     final Map<String, String> headers = {
       'Authorization':
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MDQ5YzQ3MzUwODg3Y2NhMDIwZGQyNmRkZDVmMWFkMiIsInN1YiI6IjY1NTNhYWNkNTM4NjZlMDBmZjA1ZjNmMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hy8Nz4pWPueNlz0-C0qYYB_aDFO12hMfqQuDMVljTh4', 
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MDQ5YzQ3MzUwODg3Y2NhMDIwZGQyNmRkZDVmMWFkMiIsInN1YiI6IjY1NTNhYWNkNTM4NjZlMDBmZjA1ZjNmMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hy8Nz4pWPueNlz0-C0qYYB_aDFO12hMfqQuDMVljTh4',
       'accept': 'application/json',
     };
 
@@ -61,13 +57,13 @@ class Api {
     }
   }
 
-  
   Future<Map<String, dynamic>?> fetchUserRatedMovies() async {
-    final String url = 'https://api.themoviedb.org/3/account/$accountId/rated/movies?language=en-US&page=1&sort_by=created_at.asc';
+    final String url =
+        'https://api.themoviedb.org/3/account/$accountId/rated/movies?language=en-US&page=1&sort_by=created_at.asc';
 
     final Map<String, String> headers = {
       'Authorization':
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MDQ5YzQ3MzUwODg3Y2NhMDIwZGQyNmRkZDVmMWFkMiIsInN1YiI6IjY1NTNhYWNkNTM4NjZlMDBmZjA1ZjNmMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hy8Nz4pWPueNlz0-C0qYYB_aDFO12hMfqQuDMVljTh4', 
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MDQ5YzQ3MzUwODg3Y2NhMDIwZGQyNmRkZDVmMWFkMiIsInN1YiI6IjY1NTNhYWNkNTM4NjZlMDBmZjA1ZjNmMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hy8Nz4pWPueNlz0-C0qYYB_aDFO12hMfqQuDMVljTh4',
       'accept': 'application/json',
     };
 
@@ -84,8 +80,9 @@ class Api {
     }
   }
 
-Future<Map<String, dynamic>?> fetchWatchlistedMovies() async {
-    final String accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MDQ5YzQ3MzUwODg3Y2NhMDIwZGQyNmRkZDVmMWFkMiIsInN1YiI6IjY1NTNhYWNkNTM4NjZlMDBmZjA1ZjNmMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hy8Nz4pWPueNlz0-C0qYYB_aDFO12hMfqQuDMVljTh4'; 
+  Future<Map<String, dynamic>?> fetchWatchlistedMovies() async {
+    final String accessToken =
+        'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MDQ5YzQ3MzUwODg3Y2NhMDIwZGQyNmRkZDVmMWFkMiIsInN1YiI6IjY1NTNhYWNkNTM4NjZlMDBmZjA1ZjNmMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hy8Nz4pWPueNlz0-C0qYYB_aDFO12hMfqQuDMVljTh4';
 
     final String url =
         'https://api.themoviedb.org/3/account/20705651/watchlist/movies?language=en-US&page=1&sort_by=created_at.asc';
@@ -110,7 +107,8 @@ Future<Map<String, dynamic>?> fetchWatchlistedMovies() async {
   }
 
   Future<Map<String, dynamic>?> fetchWatchlistedTVShows() async {
-    final String accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MDQ5YzQ3MzUwODg3Y2NhMDIwZGQyNmRkZDVmMWFkMiIsInN1YiI6IjY1NTNhYWNkNTM4NjZlMDBmZjA1ZjNmMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hy8Nz4pWPueNlz0-C0qYYB_aDFO12hMfqQuDMVljTh4'; 
+    final String accessToken =
+        'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MDQ5YzQ3MzUwODg3Y2NhMDIwZGQyNmRkZDVmMWFkMiIsInN1YiI6IjY1NTNhYWNkNTM4NjZlMDBmZjA1ZjNmMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hy8Nz4pWPueNlz0-C0qYYB_aDFO12hMfqQuDMVljTh4';
 
     final String url =
         'https://api.themoviedb.org/3/account/20705651/watchlist/tv?language=en-US&page=1&sort_by=created_at.asc';
@@ -190,8 +188,7 @@ Future<Map<String, dynamic>?> fetchWatchlistedMovies() async {
     }
   }
 
-
-   Future<List<Actor>> getActorSearch(String query) async {
+  Future<List<Actor>> getActorSearch(String query) async {
     String searchUrl = '$searchActor&query=$query';
 
     final response = await http.get(Uri.parse(searchUrl));
@@ -203,7 +200,6 @@ Future<Map<String, dynamic>?> fetchWatchlistedMovies() async {
       throw Exception('Failed to load actors');
     }
   }
-
 
   Future<Actor> fetchActorDetails(int actorId) async {
     // Construct the URL to fetch actor details
@@ -224,64 +220,66 @@ Future<Map<String, dynamic>?> fetchWatchlistedMovies() async {
     }
   }
 
- Future<Media> fetchMediaDetails(int mediaId, String mediaType) async {
-  String mediaDetailsUrl = 'https://api.themoviedb.org/3/$mediaType/$mediaId?api_key=$apiKey';
+  Future<Media> fetchMediaDetails(int mediaId, String mediaType) async {
+    String mediaDetailsUrl =
+        'https://api.themoviedb.org/3/$mediaType/$mediaId?api_key=$apiKey';
 
-  try {
-    final response = await http.get(Uri.parse(mediaDetailsUrl));
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      return Media.fromJson(data);
-    } else {
-      throw Exception('Failed to load media details. Status code: ${response.statusCode}');
+    try {
+      final response = await http.get(Uri.parse(mediaDetailsUrl));
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        return Media.fromJson(data);
+      } else {
+        throw Exception(
+            'Failed to load media details. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching media details: $e');
+      throw Exception('Failed to load media details. Error: $e');
     }
-  } catch (e) {
-    print('Error fetching media details: $e');
-    throw Exception('Failed to load media details. Error: $e');
-  } 
-}
-
+  }
 
   Future<String> createGuestSession() async {
-  final String url = 'https://api.themoviedb.org/3/authentication/guest_session/new?api_key=$apiKey';
+    final String url =
+        'https://api.themoviedb.org/3/authentication/guest_session/new?api_key=$apiKey';
 
-  final response = await http.get(Uri.parse(url));
+    final response = await http.get(Uri.parse(url));
 
-  if (response.statusCode == 200) {
-    final result = json.decode(response.body);
-    final String guestSessionId = result['guest_session_id'];
-    print('Guest Session ID: $guestSessionId');
-    return guestSessionId;
-  } else {
-    throw Exception('Failed to create guest session');
+    if (response.statusCode == 200) {
+      final result = json.decode(response.body);
+      final String guestSessionId = result['guest_session_id'];
+      print('Guest Session ID: $guestSessionId');
+      return guestSessionId;
+    } else {
+      throw Exception('Failed to create guest session');
+    }
   }
-}
 
+  Future<List<Map<String, String>>> fetchAvailableLanguages() async {
+    final response = await http.get(Uri.parse(
+        'https://api.themoviedb.org/3/configuration/languages?api_key=6049c47350887cca020dd26ddd5f1ad2'));
 
-Future<List<Map<String, String>>> fetchAvailableLanguages() async {
-  final response = await http.get(Uri.parse('https://api.themoviedb.org/3/configuration/languages?api_key=6049c47350887cca020dd26ddd5f1ad2'));
+    if (response.statusCode == 200) {
+      List<dynamic> languages = json.decode(response.body);
+      List<String> targetLanguages = [
+        'en',
+        'es',
+        'fr'
+      ]; // English, Spanish, French
+      List<Map<String, String>> selectedLanguages = [];
 
-  if (response.statusCode == 200) {
-    List<dynamic> languages = json.decode(response.body);
-    List<String> targetLanguages = ['en', 'es', 'fr']; // English, Spanish, French
-    List<Map<String, String>> selectedLanguages = [];
+      languages.forEach((language) {
+        if (targetLanguages.contains(language['iso_639_1'])) {
+          selectedLanguages.add({
+            'name': language['english_name'],
+            'iso_639_1': language['iso_639_1'],
+          });
+        }
+      });
 
-    languages.forEach((language) {
-      if (targetLanguages.contains(language['iso_639_1'])) {
-        selectedLanguages.add({
-          'name': language['english_name'],
-          'iso_639_1': language['iso_639_1'],
-        });
-      }
-    });
-
-    return selectedLanguages;
-  } else {
-    throw Exception('Failed to load languages');
+      return selectedLanguages;
+    } else {
+      throw Exception('Failed to load languages');
+    }
   }
-}
-
-
-
-
 }

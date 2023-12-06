@@ -1,8 +1,7 @@
-import 'Media.dart';
+import 'Media_model.dart';
 
-
-class TVShow extends Media {
-  TVShow({
+class Movie extends Media {
+  Movie({
     required String title,
     required String backDropPath,
     required String originalTitle,
@@ -13,7 +12,7 @@ class TVShow extends Media {
     required int id,
     required List<dynamic> genre,
     required String mediaType,
-    required int runTime
+    required int runTime,
   }) : super(
           title: title,
           backDropPath: backDropPath,
@@ -29,19 +28,20 @@ class TVShow extends Media {
          
         );
 
-  factory TVShow.fromJson(Map<String, dynamic> json) {
-    return TVShow(
-      title: json["name"] ?? " ", 
-      backDropPath: json["backdrop_path"],
-      originalTitle: json["original_name"],
-      overview: json["overview"],
-      posterPath: json["poster_path"],
-      releaseDate: json["first_air_date"],
-      voteAverage: json["vote_average"],
-      genre: json["genre_ids"],
-      id: json["id"],
-      mediaType: json["media_type"],
-      runTime: json["episode_run_time"] ?? 0
+  factory Movie.fromJson(Map<String, dynamic> json) {
+
+    return Movie(
+      title: json["title"] ?? "",
+      backDropPath: json["backdrop_path"] ?? '',
+      originalTitle: json["original_title"] ?? '',
+      overview: json["overview"] ?? '',
+      posterPath: json["poster_path"] ?? '',
+      releaseDate: json["release_date"] ?? '',
+      voteAverage: json["vote_average"]?.toDouble() ?? 0.0,
+      genre: ['genre_ids'],
+      id: json["id"] ?? 0,
+      mediaType: json["media_type"] ?? '',
+      runTime:json["runtime"] ?? 0
     );
   }
 }

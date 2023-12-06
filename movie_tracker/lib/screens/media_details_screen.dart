@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:movie_tracker/models/Media.dart';
+import 'package:movie_tracker/models/Media_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_tracker/shared/constants.dart';
 import 'package:movie_tracker/widgets/back_button.dart';
 import 'package:movie_tracker/api/api.dart';
 import 'package:movie_tracker/screens/actor_details.dart';
-import 'package:movie_tracker/models/Actor.dart';
+import 'package:movie_tracker/models/Actor_model.dart';
 import 'package:movie_tracker/shared/colors.dart';
 import 'package:http/http.dart' as http;
 
@@ -169,7 +169,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 5,
               ),
               Text(
@@ -202,7 +202,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     Text(
                       getYearFromDate(
                           media.releaseDate), // Pass the release date string
-                      style: TextStyle(fontSize: 16),
+                      style: const TextStyle(fontSize: 16),
                     ),
                   ],
                 )),

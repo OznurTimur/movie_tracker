@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_tracker/api/api.dart';
-import 'package:movie_tracker/models/Movie.dart';
-import 'package:movie_tracker/models/TVShow.dart';
+import 'package:movie_tracker/models/Movie_model.dart';
+import 'package:movie_tracker/models/TVShow_model.dart';
 import 'package:movie_tracker/widgets/back_button.dart';
 import 'package:movie_tracker/screens/media_details_screen.dart';
 

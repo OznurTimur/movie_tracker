@@ -1,8 +1,8 @@
 import 'package:movie_tracker/widgets/side_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:movie_tracker/models/Movie.dart';
-import 'package:movie_tracker/models/TVShow.dart';
+import 'package:movie_tracker/models/Movie_model.dart';
+import 'package:movie_tracker/models/TVShow_model.dart';
 import '../api/api.dart';
 import '../widgets/trending_slider.dart';
 

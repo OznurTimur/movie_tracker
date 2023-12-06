@@ -48,7 +48,7 @@ class Sidebar extends StatelessWidget {
               Navigator.pop(context);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ActorSearchScreen()),
+                MaterialPageRoute(builder: (context) => const ActorSearchScreen()),
               );
             },
           ),
@@ -70,7 +70,7 @@ class Sidebar extends StatelessWidget {
               Navigator.pop(context);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Ratings()),
+                MaterialPageRoute(builder: (context) => const Ratings()),
               );
             },
           ),

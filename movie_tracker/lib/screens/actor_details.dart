@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:movie_tracker/models/Actor.dart';
-import 'package:movie_tracker/models/Media.dart';
+import 'package:movie_tracker/models/Actor_model.dart';
+import 'package:movie_tracker/models/Media_model.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_tracker/shared/constants.dart';
 import 'package:movie_tracker/api/api.dart';
@@ -12,7 +12,7 @@ import 'package:movie_tracker/screens/media_details_screen.dart';
 class ActorDetailsScreen extends StatefulWidget {
   final Actor actor;
 
-  ActorDetailsScreen({super.key, required this.actor});
+  const ActorDetailsScreen({super.key, required this.actor});
 
   @override
   // ignore: library_private_types_in_public_api

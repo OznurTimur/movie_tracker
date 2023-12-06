@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_tracker/models/Actor.dart';
+import 'package:movie_tracker/models/Actor_model.dart';
 import 'package:movie_tracker/api/api.dart';
 import 'package:movie_tracker/screens/actor_details.dart';
 
